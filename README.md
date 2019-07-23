@@ -37,7 +37,7 @@ market only|54.0%|77.5%|89.8%|93.4|
 market to duke|46.7%|67.9%|79.2%|83.6%|
 duke only|39.0%|63.2%|75.4%|79.4%|
 2. MTMS17
-Method & data|Map|rank-1|rank-5|rank10|
+Method and data|Map|rank-1|rank-5|rank10|
 --|:--:|:--:|:--:|:--:|
 market to msmt17|9.2%|25.5%|37.3%|42.6%|
 duke to msmt17|11.7%|32.3%|44.4%|50.1%|
