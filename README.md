@@ -1,6 +1,6 @@
 # [Adaptive-Exploration-for-Unsupervised-Person-Re-Identification](https://arxiv.org/pdf/1907.04194.pdf)
 
-
+![Framework of AE](https://github.com/dyh127/Adaptive-Exploration-for-Unsupervised-Person-Re-Identification/master/images/framework.png)
 
 ## Prerequisites
 * Python 3.6
