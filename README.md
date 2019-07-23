@@ -28,7 +28,7 @@ data/
 3. Unzip them and put the unzipped file under ```checkpoint/```.
 4. run ```bash test.sh```.
 
-## Results
+## Results (paper)
 1. Market1501(market) and DukeMTMC-reID(duke)
 
 |**Method & data**|**Map**|**rank-1**|**rank-5**|**rank10**|
