@@ -30,18 +30,18 @@ data/
 
 ## Results
 1. Market1501(market) and DukeMTMC-reID(duke):
-Method & data|Map|rank-1|rank-5|rank10|
---|:--:|:--:|:--:|:--:
-duke to market|58.0%|81.6%|91.9%|94.6%|
-market only|54.0%|77.5%|89.8%|93.4|
-market to duke|46.7%|67.9%|79.2%|83.6%|
-duke only|39.0%|63.2%|75.4%|79.4%|
+|Method & data|Map|rank-1|rank-5|rank10|
+|--|:--:|:--:|:--:|:--:|
+|duke to market|58.0%|81.6%|91.9%|94.6%|
+|market only|54.0%|77.5%|89.8%|93.4|
+|market to duke|46.7%|67.9%|79.2%|83.6%|
+|duke only|39.0%|63.2%|75.4%|79.4%|
 2. MTMS17
-Method and data|Map|rank-1|rank-5|rank10|
---|:--:|:--:|:--:|:--:
-market to msmt17|9.2%|25.5%|37.3%|42.6%|
-duke to msmt17|11.7%|32.3%|44.4%|50.1%|
-msmt17 only|8.5%|26.6%|37.0%|41.7%|
+|Method and data|Map|rank-1|rank-5|rank10|
+|--|:--:|:--:|:--:|:--:|
+|market to msmt17|9.2%|25.5%|37.3%|42.6%|
+|duke to msmt17|11.7%|32.3%|44.4%|50.1%|
+|msmt17 only|8.5%|26.6%|37.0%|41.7%|
 ## Citation
 If you find the code useful, considering citing our work:
 ```
