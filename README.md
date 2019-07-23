@@ -25,3 +25,24 @@ data/
 1. Download the model (market2duke and duke2market).
 2. Unzip them and put the unzipped file under ```checkpoint/```.
 3. run ```bash test.sh```.
+
+## Citation
+If you find the code useful, considering citing our work:
+```
+@article{DBLP:journals/corr/abs-1907-04194,
+  author    = {Yuhang Ding and
+               Hehe Fan and
+               Mingliang Xu and
+               Yi Yang},
+  title     = {Adaptive Exploration for Unsupervised Person Re-Identification},
+  journal   = {CoRR},
+  volume    = {abs/1907.04194},
+  year      = {2019},
+  url       = {http://arxiv.org/abs/1907.04194},
+  archivePrefix = {arXiv},
+  eprint    = {1907.04194},
+  timestamp = {Wed, 17 Jul 2019 10:27:36 +0200},
+  biburl    = {https://dblp.org/rec/bib/journals/corr/abs-1907-04194},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+```
