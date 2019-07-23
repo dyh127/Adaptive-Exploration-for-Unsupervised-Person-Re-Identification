@@ -30,6 +30,7 @@ data/
 
 ## Results
 1. Market1501(market) and DukeMTMC-reID(duke)
+
 |**Method & data**|**Map**|**rank-1**|**rank-5**|**rank10**|
 |:---:|:---:|:---:|:---:|:---:|
 |duke to market|58.0%|81.6%|91.9%|94.6%|
@@ -37,6 +38,7 @@ data/
 |market to duke|46.7%|67.9%|79.2%|83.6%|
 |duke only|39.0%|63.2%|75.4%|79.4%|
 2. MSMT17(msmt17)
+
 |**Method & data**|**Map**|**rank-1**|**rank-5**|**rank10**|
 |:---:|:---:|:---:|:---:|:---:|
 |market to msmt17|9.2%|25.5%|37.3%|42.6%|
