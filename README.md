@@ -72,6 +72,8 @@ If you find the code useful, considering citing our work:
 ```
 ## Related Repos
 https://github.com/zhunzhong07/ECN
+
 https://github.com/Cysu/open-reid
+
 https://github.com/layumi/Person_reID_baseline_pytorch
 
