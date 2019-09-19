@@ -7,7 +7,7 @@
 * Pytorch 1.0
 ## Datasets
 1. Create folder to save data ```mkdir data```.
-2. Download the [datasets](https://drive.google.com/drive/folders/1gP_-NPynQct5APKF55cg2NwfmuE8kpT-?usp=sharing) (Market-1501 and DukeMTMC-reID).
+2. Download the [datasets](https://drive.google.com/drive/folders/1gP_-NPynQct5APKF55cg2NwfmuE8kpT-?usp=sharing) (Market-1501, DukeMTMC-reID and MSMT17).
 3. Unzip them and put the unzipped file under ```data/```.
 4. The data structure would look like:
 ```
@@ -15,18 +15,23 @@ data/
     market/
           bounding_box_train/
           bounding_box_test/
+          bounding_box_train_camstyle/
           query/
     duke/
           bounding_box_train/
           bounding_box_test/
+          bounding_box_train_camstyle/
+          query/
+    msmt17/
+          bounding_box_train/
+          bounding_box_test/
+          bounding_box_train_camstyle/
           query/
 ```
+## Train
+run ```bash train.sh```.
 ## Test
-(training code is still being collated. sorry for that)
-1. Create folder to save trained model ```mkdir checkpoint```.
-2. Download the [trained model](https://drive.google.com/drive/folders/1w54U0QNIvE8PDEryAa_5jYZxt0UhnhAh?usp=sharing) (market2duke and duke2market).
-3. Unzip them and put the unzipped file under ```checkpoint/```.
-4. run ```bash test.sh```.
+run ```bash test.sh```.
 
 ## Results (paper)
 1. Market1501(market) and DukeMTMC-reID(duke)
