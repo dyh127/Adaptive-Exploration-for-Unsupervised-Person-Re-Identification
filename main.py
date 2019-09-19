@@ -13,11 +13,13 @@ from torch.utils.data import DataLoader
 from reid.datasets.data import Data
 
 from reid import models
+from reid.trainers import Trainer
 from reid.evaluators import Evaluator
 from reid.utils.data import transforms as T
 from reid.utils.data.preprocessor import Preprocessor, UnsupervisedCamStylePreprocessor
 from reid.utils.logging import Logger
 from reid.utils.serialization import load_checkpoint, save_checkpoint
+from reid.nonparametric_classifier import nonparametric_classifier
 
 
 def get_data(data_dir, source, target, height, width, batch_size, re=0, workers=8):
@@ -73,8 +75,15 @@ def get_data(data_dir, source, target, height, width, batch_size, re=0, workers=
 
 
 def main(args):
-    # For fast training.
-    cudnn.benchmark = True
+    # Fix seed
+    seed=3
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed(seed)
+    np.random.seed(seed)
+    random.seed(seed)
+    cudnn.benchmark = False
+    cudnn.deterministic=True
+    #cudnn.benchmark = True
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
     # Redirect print to both console and log file
@@ -95,17 +104,22 @@ def main(args):
     model = models.create(args.arch, num_features=args.features,
                           dropout=args.dropout, num_classes=num_classes)
 
+    # AE model
+    num_tgt = len(dataset.target_train)
+    target_classifier = nonparametric_classifier(args.features, num_tgt, tau=args.tau, lambda0=args.lambda0, delta = args.delta, mu=args.mu)
     # Load from checkpoint
     start_epoch = 0
     if args.resume:
         checkpoint = load_checkpoint(args.resume)
         model.load_state_dict(checkpoint['state_dict'])
+        target_classifier.load_state_dict(checkpoint['state_dict_inv'])
         start_epoch = checkpoint['epoch']
         print("=> Start epoch {} "
               .format(start_epoch))
 
     # Set model
     model = nn.DataParallel(model).to(device)
+    target_classifier = target_classifier.to(device)
 
     # Evaluator
     evaluator = Evaluator(model)
@@ -115,10 +129,53 @@ def main(args):
                            dataset.gallery, args.output_feature)
         return
 
+    # Optimizer
+    base_param_ids = set(map(id, model.module.base.parameters()))
+
+    base_params_need_for_grad = filter(lambda p: p.requires_grad, model.module.base.parameters())
+
+    new_params = [p for p in model.parameters() if
+                    id(p) not in base_param_ids]
+    param_groups = [
+        {'params': base_params_need_for_grad, 'lr_mult': 0.1},
+        {'params': new_params, 'lr_mult': 1.0}]
+
+    optimizer = torch.optim.SGD(param_groups, lr=args.lr,
+                                momentum=args.momentum,
+                                weight_decay=args.weight_decay,
+                                nesterov=True)
+
+    # Trainer
+    trainer = Trainer(model, target_classifier, xi=args.xi)
+
+    # Schedule learning rate
+    def adjust_lr(epoch):
+        step_size = args.epochs_decay
+        lr = args.lr * (0.1 ** (epoch // step_size))
+        for g in optimizer.param_groups:
+            g['lr'] = lr * g.get('lr_mult', 1)
+
+    # Start training
+    for epoch in range(start_epoch, args.epochs):
+        adjust_lr(epoch)
+        trainer.train(epoch, source_train_loader, target_train_loader, optimizer)
+        save_checkpoint({
+            'state_dict': model.module.state_dict(),
+            'state_dict_inv': target_classifier.state_dict(),
+            'epoch': epoch + 1,
+        }, fpath=osp.join(args.logs_dir, 'checkpoint.pth.tar'))
+        print('\n * Finished epoch {:3d} \n'.
+              format(epoch))
+
+    # Final test
+    print('Test with best model:')
+    evaluator = Evaluator(model)
+    evaluator.evaluate(query_loader, gallery_loader, dataset.query,
+                       dataset.gallery, args.output_feature)
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description="Invariance Learning for Domain Adaptive Re-ID")
+    parser = argparse.ArgumentParser(description="AE for Domain Adaptive Re-ID")
     # source
     parser.add_argument('-s', '--source', type=str, default='duke',
                         choices=['market', 'duke', 'msmt17'])
@@ -132,6 +189,8 @@ if __name__ == '__main__':
                         help="input height, default: 256")
     parser.add_argument('--width', type=int, default=128,
                         help="input width, default: 128")
+    parser.add_argument('--re', type=float, default=0.5,
+                        help='random erasing rate')
     # model
     parser.add_argument('-a', '--arch', type=str, default='resnet50',
                         choices=models.names())
@@ -150,26 +209,23 @@ if __name__ == '__main__':
     parser.add_argument('--epochs', type=int, default=60)
     parser.add_argument('--epochs_decay', type=int, default=40)
     parser.add_argument('--print-freq', type=int, default=50)
-    # metric learning
-    parser.add_argument('--dist-metric', type=str, default='cosdistance',
-                        help='cosdistance and euclidean')
-    # misc
     working_dir = osp.dirname(osp.abspath(__file__))
     parser.add_argument('--data-dir', type=str, metavar='PATH',
                         default=osp.join(working_dir, 'data'))
     parser.add_argument('--logs-dir', type=str, metavar='PATH',
                         default=osp.join(working_dir, 'logs'))
+    # testing configs
     parser.add_argument('--output_feature', type=str, default='pool5')
-    parser.add_argument('--re', type=float, default=0.5)
-    parser.add_argument('--mu', type=float, default=0.01,
-                        help='update rate for the exemplar memory in invariance learning')
+    # hyper-parameter
+    parser.add_argument('--mu', type=float, default=0.5,
+                        help='update rate for the feature memory')
     parser.add_argument('--tau', type=float, default=0.05,
-                        help='The temperature in invariance learning')
-    parser.add_argument('--lambda0', type=float, default=1.0,
-                        help='')
-    parser.add_argument('--delta', type=float, default=1.0,
-                        help='')
-    parser.add_argument('--xi', type=float, default=0.3,
+                        help='The temperature fact in softmax function')
+    parser.add_argument('--lambda0', type=float, default=0.55,
+                        help='similarity threshold for adaptive selection')
+    parser.add_argument('--delta', type=float, default=3.5,
+                        help='weight controls the importance of minimizing and maximizing')
+    parser.add_argument('--xi', type=float, default=0.6,
                         help='weight controls the importance of the source loss and the target loss.')
     args = parser.parse_args()
     main(args)

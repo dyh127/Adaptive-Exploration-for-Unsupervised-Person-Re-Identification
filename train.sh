@@ -1,5 +1,7 @@
 #!/bin/bash
 export CUDA_VISIBLE_DEVICES=6 
+delta=3.5
+lambda=0.55
 
 #########duke 2 market transfer
 mu=0.4
@@ -32,4 +34,4 @@ targetset='duke'
 COMMENT
 
 
-python main.py -s ${sourceset} -t ${targetset} --resume ./checkpoint/AE_${sourceset}2${targetset}_xi_${xi}/checkpoint.pth.tar --data-dir data/ --evaluate
+python main.py -s ${sourceset} -t ${targetset} --logs-dir checkpoint/AE_${sourceset}2${targetset}_xi_${xi} --data-dir  data/ --lambda $lambda --delta $delta --xi $xi --mu $mu
