@@ -1,4 +1,4 @@
-# [Adaptive-Exploration-for-Unsupervised-Person-Re-Identification](https://arxiv.org/pdf/1907.04194.pdf)
+# [Adaptive-Exploration-for-Unsupervised-Person-Re-Identification](https://arxiv.org/pdf/1907.04194.pdf)[arxiv](https://arxiv.org/pdf/1907.04194.pdf)
 
 ![Framework of AE](https://github.com/dyh127/Adaptive-Exploration-for-Unsupervised-Person-Re-Identification/blob/master/images/framework.png)
 
