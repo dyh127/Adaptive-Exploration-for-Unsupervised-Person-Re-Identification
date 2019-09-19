@@ -7,7 +7,7 @@
 * Pytorch 1.0
 ## Datasets
 1. Create folder to save data ```mkdir data```.
-2. Download the [datasets](https://drive.google.com/drive/folders/1gP_-NPynQct5APKF55cg2NwfmuE8kpT-?usp=sharing) (Market-1501, DukeMTMC-reID and MSMT17).
+2. Download the [datasets](https://drive.google.com/drive/folders/1gP_-NPynQct5APKF55cg2NwfmuE8kpT-?usp=sharing) (Market-1501, DukeMTMC-reID and MSMT17). If you want dataset from Baidu Yun, please refer to [here](https://github.com/zhunzhong07/ECN).
 3. Unzip them and put the unzipped file under ```data/```.
 4. The data structure would look like:
 ```
@@ -71,3 +71,4 @@ If you find the code useful, considering citing our work:
 }
 ```
 ## Related Repos
+https://github.com/zhunzhong07/ECN
