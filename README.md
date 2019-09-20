@@ -39,7 +39,7 @@ run ```bash test.sh```.
 |**Method & data**|**Map**|**rank-1**|**rank-5**|**rank10**|
 |:---:|:---:|:---:|:---:|:---:|
 |duke to market|58.0%|81.6%|91.9%|94.6%|
-|market only|54.0%|77.5%|89.8%|93.4|
+|market only|54.0%|77.5%|89.8%|93.4%|
 |market to duke|46.7%|67.9%|79.2%|83.6%|
 |duke only|39.0%|63.2%|75.4%|79.4%|
 2. MSMT17(msmt17)
