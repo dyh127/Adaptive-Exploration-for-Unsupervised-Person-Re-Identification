@@ -64,7 +64,7 @@ class nonparametric_classifier(nn.Module):
         return loss, ks
 
     def adaptive_selection(self, inputs, targets):
-        ###maximize distances between similar person images 
+        ###minimize distances between all person images
         targets_onehot = (inputs > self.lambda0/self.tau).float()
         ks = (targets_onehot.sum(dim=1)).float()
         ks1 = ks.cpu()
@@ -73,8 +73,8 @@ class nonparametric_classifier(nn.Module):
         ks = self.delta / (ks * torch.log(ks))
         ks = (ks * ks_mask).view(-1,1)
         targets_onehot = targets_onehot * ks
-
-        ###minimize distances between all person images
+       
+        ###maximize distances between similar person images
         targets = torch.unsqueeze(targets, 1)
         targets_onehot.scatter_(1, targets, float(1))
          
