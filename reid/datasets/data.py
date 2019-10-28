@@ -74,6 +74,7 @@ class Data(object):
 
     def load(self):
         self.source_train, self.num_train_ids = self.preprocess(self.source_images_dir, self.source_train_path)
+        print ("For target train set, indexes are treated as identities of images")
         self.target_train, self.num_target_ids = self.preprocess(self.target_images_dir, self.target_train_path, fakelabel=True)
         self.gallery, self.num_gallery_ids = self.preprocess(self.target_images_dir, self.gallery_path, False)
         self.query, self.num_query_ids = self.preprocess(self.target_images_dir, self.query_path, False)
