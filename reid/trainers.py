@@ -52,6 +52,8 @@ class Trainer(object):
                 short_data = next(short_iter)
             if len(data_loader) > len(target_train_loader):
                 inputs, pids = self._parse_data(long_data)
+                #for target data, pids are its indexes 
+                #this is defined in data.py in the datasets folder
                 inputs_target, index_target = self._parse_data(short_data)
             else:
                 inputs, pids = self._parse_data(short_data)
