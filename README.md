@@ -53,21 +53,18 @@ run ```bash test.sh```.
 ## Citation
 If you find the code useful, considering citing our work:
 ```
-@article{DBLP:journals/corr/abs-1907-04194,
+@article{DBLP:journals/tomccap/DingFXY20,
   author    = {Yuhang Ding and
                Hehe Fan and
                Mingliang Xu and
                Yi Yang},
   title     = {Adaptive Exploration for Unsupervised Person Re-Identification},
-  journal   = {CoRR},
-  volume    = {abs/1907.04194},
-  year      = {2019},
-  url       = {http://arxiv.org/abs/1907.04194},
-  archivePrefix = {arXiv},
-  eprint    = {1907.04194},
-  timestamp = {Wed, 17 Jul 2019 10:27:36 +0200},
-  biburl    = {https://dblp.org/rec/bib/journals/corr/abs-1907-04194},
-  bibsource = {dblp computer science bibliography, https://dblp.org}
+  journal   = {{TOMM}},
+  volume    = {16},
+  number    = {1},
+  pages     = {3:1--3:19},
+  year      = {2020},
+  doi       = {10.1145/3369393},
 }
 ```
 ## Related Repos
