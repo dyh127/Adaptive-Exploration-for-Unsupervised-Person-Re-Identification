@@ -54,10 +54,7 @@ run ```bash test.sh```.
 If you find the code useful, considering citing our work:
 ```
 @article{journals/tomccap/DingFXY20,
-  author    = {Yuhang Ding and
-               Hehe Fan and
-               Mingliang Xu and
-               Yi Yang},
+  author    = {Yuhang Ding and Hehe Fan and Mingliang Xu and Yi Yang},
   title     = {Adaptive Exploration for Unsupervised Person Re-Identification},
   journal   = {{TOMM}},
   volume    = {16},
