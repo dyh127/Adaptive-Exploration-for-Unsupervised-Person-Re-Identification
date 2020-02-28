@@ -53,7 +53,7 @@ run ```bash test.sh```.
 ## Citation
 If you find the code useful, considering citing our work:
 ```
-@article{DBLP:journals/tomccap/DingFXY20,
+@article{journals/tomccap/DingFXY20,
   author    = {Yuhang Ding and
                Hehe Fan and
                Mingliang Xu and
