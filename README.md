@@ -31,6 +31,7 @@ data/
 ## Train
 run ```bash train.sh```.
 ## Test
+we also provide the [pretrained model](https://drive.google.com/drive/folders/1JxxSUZjeg8y-FeW1fwtdvxS9w4MGA1Et?usp=sharing) for testing.
 run ```bash test.sh```.
 
 ## Results (paper)
